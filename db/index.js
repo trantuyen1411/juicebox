@@ -1,6 +1,6 @@
 const { Client } = require('pg') // imports the pg module
-
-const client = new Client('postgres://localhost:5432/juicebox-dev');
+const clienturl = process.env.DATABASE_URL || 'postgres://localhost:5432/juicebox-dev';
+const client = new Client(clienturl);
 
 /**
  * USER Methods
@@ -276,7 +276,7 @@ async function createTags(tagList) {
         FROM posts
         WHERE id=$1;
       `, [postId]);
-      
+
       if (!post) {
         throw {
           name: "PostNotFoundError",
